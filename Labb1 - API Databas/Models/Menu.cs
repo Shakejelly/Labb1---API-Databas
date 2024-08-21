@@ -8,6 +8,6 @@ namespace Labb1___API_Databas.Models
         public int DishId { get; set; }
         public string  DishName { get; set; }
         public int DishPrice { get; set; }
-        public string DishAvailable { get; set; } // Kanske en Bool?
+        public int DishAvailable { get; set; } // Kanske en Bool?
     }
 }

@@ -8,6 +8,7 @@ namespace Labb1___API_Databas.Models
         public int TableId { get; set; }
         public int TableNumber { get; set; }
         public int Seats { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Labb1___API_Databas.Models
@@ -7,11 +8,18 @@ namespace Labb1___API_Databas.Models
     {
         [Key]
         public int BookingId { get; set; }
-       
+        [ForeignKey("Table")]
+        public int FK_TableId { get; set; }
         public Table Table { get; set; }
-        public Customer Customer { get; set; }
-        public string Day { get; set; }
 
+        [ForeignKey("Customer")]
+        public int FK_CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        public string TimeToArrive { get; set; }
+
+        [Required]
+        public DateTime BookingDate { get; set; }
         public int TableAmount { get; set; }
     }
 }
