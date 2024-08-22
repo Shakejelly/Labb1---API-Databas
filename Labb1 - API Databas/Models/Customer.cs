@@ -6,7 +6,9 @@ namespace Labb1___API_Databas.Models
     {
         [Key]
         public int CustomerId { get; set; }
+        [Required]
         public string BookingName { get; set; }
+        [Required]
         public int PhoneNumber { get; set; }
         public ICollection<Booking> Bookings { get; set; }
 
