@@ -13,6 +13,6 @@ namespace Labb1___API_Databas.Controllers
         {
             _context = context;
         }
-       
+        
     }
 }
