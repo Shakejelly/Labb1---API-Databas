@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Models\Dto\" />
     <Folder Include="Models\ViewModel\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
