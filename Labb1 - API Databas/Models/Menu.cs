@@ -14,7 +14,8 @@ namespace Labb1___API_Databas.Models
         public string Description { get; set; }
 
         [Required]
-        public int DishPrice { get; set; }
-        public int DishAvailable { get; set; } // Kanske en Bool?
+        public double DishPrice { get; set; }
+        public int? DishInStock { get; set; }
+        public bool DishAvailable { get; set; } // Kanske en Bool?
     }
 }

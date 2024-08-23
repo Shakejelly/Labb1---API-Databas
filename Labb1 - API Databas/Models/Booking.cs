@@ -9,7 +9,7 @@ namespace Labb1___API_Databas.Models
         [Key]
         public int BookingId { get; set; }
         [ForeignKey("Table")]
-        public int FK_TableId { get; set; }
+        public int FK_TableNumber { get; set; }
         public Table Table { get; set; }
 
         [ForeignKey("Customer")]

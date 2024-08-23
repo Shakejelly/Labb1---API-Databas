@@ -9,7 +9,7 @@ namespace Labb1___API_Databas.Models
         [Required]
         public string BookingName { get; set; }
         [Required]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public ICollection<Booking> Bookings { get; set; }
 
     }
