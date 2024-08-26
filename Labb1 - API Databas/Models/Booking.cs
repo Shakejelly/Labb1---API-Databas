@@ -15,11 +15,12 @@ namespace Labb1___API_Databas.Models
         [ForeignKey("Customer")]
         public int FK_CustomerId { get; set; }
         public Customer Customer { get; set; }
-
-        public string TimeToArrive { get; set; }
+        [Required]
+        public DateTime? TimeToArrive { get; set; }
 
         [Required]
-        public DateTime BookingDate { get; set; }
+        public string BookingDate { get; set; }
+        [Required]
         public int TableAmount { get; set; }
     }
 }
