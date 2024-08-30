@@ -4,7 +4,9 @@
     {
    
         public int ReservationAmount { get; set; }
-        public DateTime? BookingDate {  get; set; }
+        public string BookingDate {  get; set; }
+       
+        AddCustomerDto Customer { get; set; }
         
     }
 }

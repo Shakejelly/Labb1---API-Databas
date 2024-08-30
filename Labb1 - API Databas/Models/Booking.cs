@@ -8,6 +8,7 @@ namespace Labb1___API_Databas.Models
     {
         [Key]
         public int BookingId { get; set; }
+
         [ForeignKey("Table")]
         public int FK_TableNumber { get; set; }
         public Table Table { get; set; }
@@ -15,12 +16,14 @@ namespace Labb1___API_Databas.Models
         [ForeignKey("Customer")]
         public int FK_CustomerId { get; set; }
         public Customer Customer { get; set; }
-        [Required]
-        public DateTime? TimeToArrive { get; set; }
 
+        [ForeignKey("Menu")]
+        public int FK_MenuId { get; set; }
+        public Menu Menu { get; set; }
         [Required]
-        public string BookingDate { get; set; }
-        [Required]
-        public int TableAmount { get; set; }
+        public string TimeToArrive { get; set; }
+
+       
+       
     }
 }

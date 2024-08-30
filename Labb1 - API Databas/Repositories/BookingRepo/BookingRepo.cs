@@ -12,22 +12,17 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
             _context = context;
         
         }
-        public async Task AddCustomerToReservationAsync(Customer customer, int tableAmount)
+        public async Task AddCustomerToReservationAsync(Customer customer)
         {
             try
             {
-                var reservation = await _context.Bookings
-                    .FirstOrDefaultAsync(r => r.TableAmount == tableAmount);
-                if (reservation == null) 
-                {
-                    throw new Exception("Couldn't add the reservation.");
-                }
-                _context.Customers.Add(customer);
+              _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
+                return;
             }
             catch (Exception)
             {
-                throw new Exception("Couldn't add the reservation.");
+                throw new Exception("Couldn't add the customer.");
             }
         }
         public async Task MakeReservationAsync(Booking booking)
@@ -59,12 +54,15 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
 
         }
 
-        public async Task<Booking> GetBookingNameByIdAsync(int bookingid)
+        public async Task<Booking> GetBookingNameByIdAsync(int bookingId)
         {
-            throw new NotImplementedException();
+            var result = await _context.Bookings
+                .Where(r => r.BookingId == bookingId)
+                .FirstOrDefaultAsync();
+            return result;
         }
 
-        public Task<ICollection<Booking>> GetBookings(int bookingid)
+        public Task<ICollection<Booking>> GetBookings(int bookingId)
         {
             throw new NotImplementedException();
         }

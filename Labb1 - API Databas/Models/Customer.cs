@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Labb1___API_Databas.Models
 {
@@ -10,8 +11,9 @@ namespace Labb1___API_Databas.Models
         public string ReservationName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        public Booking Bookings { get; set; }
-        public int FK_BookingId { get; set; }
+
+        public Booking Booking { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
 
 
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Labb1___API_Databas.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualBasic;
+using Labb1___API_Databas.Models.ViewModel;
 
 namespace Labb1___API_Databas.Controllers
 {
@@ -23,24 +24,22 @@ namespace Labb1___API_Databas.Controllers
         }
 
         // Book a reservation
-        public async Task<IActionResult> AddReservation([FromBody]AddCustomerDto addCustomerDto)
+        public async Task<IActionResult> AddReservation([FromBody]AddReservationDto addReservationDto)
         {
             try
             {
-            var newReservation = new Customer
+            var newReservation = new Booking
             {
-                ReservationName = addCustomerDto.ReservationName,
-                PhoneNumber = addCustomerDto.PhoneNumber,
-                Bookings = new Booking
+                BookingDate = addReservationDto.BookingDate,
+                TableAmount = addReservationDto.ReservationAmount,
+                Customer = new Customer
                 {
-                    TableAmount = addCustomerDto.Booking.ReservationAmount,
-                    TimeToArrive = addCustomerDto.Booking.BookingDate,
-                   
+                    PhoneNumber = addReservationDto.
                 }
 
             };
             var result = await _bookingRepo.AddCustomerToReservationAsync(newReservation);
-            await _bookingRepo.MakeReservationAsync(newReservation, addCustomerDto.Booking.ReservationAmount);
+            await _bookingRepo.MakeReservationAsync(newReservation);
             return Ok(result);
 
             }
@@ -65,5 +64,21 @@ namespace Labb1___API_Databas.Controllers
             await _bookingRepo.DeleteReservationAsync(booking);
             return Ok(true);
         }
+        [HttpGet("GetBookingById")]
+        [Authorize]
+        public async Task<IActionResult> GetBookingDetailsFromId([FromBody] BookingNameViewModel bookingNameViewModel)
+        {
+            try
+            {
+                var result = _bookingRepo.GetBookingNameByIdAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
