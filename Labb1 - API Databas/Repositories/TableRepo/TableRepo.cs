@@ -1,41 +1,39 @@
 ﻿using Labb1___API_Databas.Data;
 using Labb1___API_Databas.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Labb1___API_Databas.Repositories.MenuRepo
+namespace Labb1___API_Databas.Repositories.TableRepo
 {
-    public class MenuRepo : IMenuRepo
-
+    public class TableRepo : ITableRepo
     {
         private readonly RestaurantContext _context;
-        public MenuRepo(RestaurantContext context)
+        public TableRepo(RestaurantContext context)
         {
             _context = context;
 
         }
-        public async Task AddMenuAsync(Menu menu)
+        public async Task AddTableAsync(Table table)
         {
             try
             {
-                _context.Menus.Add(menu);
+                _context.Tables.Add(table);
                 await _context.SaveChangesAsync();
                 return;
             }
             catch (Exception)
             {
-                throw new Exception("Couldn't add the menu.");
+                throw new Exception("Couldn't add the table.");
             }
         }
-        public async Task DeleteTableAsync(Menu Menu)
+        public async Task DeleteTableAsync(Table Table)
         {
             try
             {
-                _context.Menus.Remove(Menu);
+                _context.Tables.Remove(Table);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
-                throw new Exception("Couldn't delete the menu.");
+                throw new Exception("Couldn't delete table.");
             }
 
         }

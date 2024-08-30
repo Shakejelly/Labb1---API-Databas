@@ -20,9 +20,6 @@ namespace Labb1___API_Databas.Models
         [ForeignKey("Menu")]
         public int FK_MenuId { get; set; }
         public Menu Menu { get; set; }
-        [Required]
-        public string TimeToArrive { get; set; }
-
        
        
     }

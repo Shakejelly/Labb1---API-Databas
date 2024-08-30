@@ -7,13 +7,17 @@ namespace Labb1___API_Databas.Models
     {
         [Key]
         public int CustomerId { get; set; }
+
         [Required]
         public string ReservationName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-
-        public Booking Booking { get; set; }
+        [Required]
+        public string TimeToArrive { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+
+
+
 
 
     }
