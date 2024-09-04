@@ -51,10 +51,5 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
             throw new NotImplementedException();
         }
 
-        public Task<Booking> GetMenuOnBookingAsync(int menuId)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

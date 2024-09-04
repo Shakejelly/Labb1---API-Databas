@@ -20,54 +20,54 @@ namespace Labb1___API_Databas.Controllers
         }
 
         // Book a reservation
-        //public async Task<IActionResult> AddReservation([FromBody]AddReservationDto addReservationDto)
+        //public async Task<IActionResult> AddReservation([FromBody] AddReservationDto addReservationDto)
         //{
         //    try
         //    {
-        //    var newReservation = new Booking
-        //    {
-        //        BookingDate = addReservationDto.BookingDate,
-        //        TableAmount = addReservationDto.ReservationAmount,
-        //        Customer = new Customer
+        //        var newReservation = new Booking
         //        {
-        //            PhoneNumber = addReservationDto.
-        //        }
+        //            BookingDate = addReservationDto.BookingDate,
+        //            TableAmount = addReservationDto.ReservationAmount,
+        //            Customer = new Customer
+        //            {
+        //                PhoneNumber = addReservationDto.
+        //            }
 
-        //    };
-        //    var result = await _bookingRepo.AddCustomerToReservationAsync(newReservation);
-        //    await _bookingRepo.MakeReservationAsync(newReservation);
-        //    return Ok(result);
+        //        };
+                //    var result = await _bookingRepo.AddCustomerToReservationAsync(newReservation);
+                //    await _bookingRepo.MakeReservationAsync(newReservation);
+                //    return Ok(result);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+                //    }
+                //    catch (Exception ex)
+                //    {
 
-        //        return StatusCode(500, $"An error occurred: {ex.Message}");
-        //    }
-        //}
+                //        return StatusCode(500, $"An error occurred: {ex.Message}");
+                //    }
+                //}
 
-       
-        ////[HttpDelete("delete_reservation")]
-        ////[Authorize]
-        ////public async Task<IActionResult> DeleteReservation()
-        ////{
 
-        ////}
-        //[HttpGet("GetBookingById")]
-        //[Authorize]
-        //public async Task<IActionResult> GetBookingDetailsFromId([FromBody] BookingNameViewModel bookingNameViewModel)
-        //{
-        //    try
-        //    {
-        //        var result = _bookingRepo.GetBookingNameByIdAsync();
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
+                ////[HttpDelete("delete_reservation")]
+                ////[Authorize]
+                ////public async Task<IActionResult> DeleteReservation()
+                ////{
 
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+                ////}
+                //[HttpGet("GetBookingById")]
+                //[Authorize]
+                //public async Task<IActionResult> GetBookingDetailsFromId([FromBody] BookingNameViewModel bookingNameViewModel)
+                //{
+                //    try
+                //    {
+                //        var result = _bookingRepo.GetBookingNameByIdAsync();
+                //        return Ok(result);
+                //    }
+                //    catch (Exception ex)
+                //    {
 
-    }
+                //        return StatusCode(500, ex.Message);
+                //    }
+                //}
+
+            }
 }

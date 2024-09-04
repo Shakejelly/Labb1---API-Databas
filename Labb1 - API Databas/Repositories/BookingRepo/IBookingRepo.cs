@@ -8,7 +8,6 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
 
         Task DeleteReservationAsync(Booking booking);
         Task<ICollection<Booking>> GetBookings(int bookingId);
-        Task<Booking> GetMenuOnBookingAsync(int menuId);
         Task<Booking> GetBookingNameByIdAsync(int bookingId);
 
     }

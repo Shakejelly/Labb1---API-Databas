@@ -28,19 +28,19 @@ namespace Labb1___API_Databas.Data
                 );
             modelBuilder.Entity<Table>().HasData(
                 
-                new Table { TableNumber = 1, Seatings = 2 },
-                new Table { TableNumber = 2, Seatings = 2 },
-                new Table { TableNumber = 3, Seatings = 2 },
-                new Table { TableNumber = 4, Seatings = 4 },
-                new Table { TableNumber = 5, Seatings = 4 },
-                new Table { TableNumber = 6, Seatings = 4 },
-                new Table { TableNumber = 7, Seatings = 4 },
-                new Table { TableNumber = 8, Seatings = 6 },
-                new Table { TableNumber = 9, Seatings = 6 },
-                new Table { TableNumber = 10, Seatings = 6 },
-                new Table { TableNumber = 11, Seatings = 6 },
-                new Table { TableNumber = 12, Seatings = 10 },
-                new Table { TableNumber = 13, Seatings = 10 }
+                new Table { TableId = 1, Seatings = 2 },
+                new Table { TableId = 2, Seatings = 2 },
+                new Table { TableId = 3, Seatings = 2 },
+                new Table { TableId = 4, Seatings = 4 },
+                new Table { TableId = 5, Seatings = 4 },
+                new Table { TableId = 6, Seatings = 4 },
+                new Table { TableId = 7, Seatings = 4 },
+                new Table { TableId = 8, Seatings = 6 },
+                new Table { TableId = 9, Seatings = 6 },
+                new Table { TableId = 10, Seatings = 6 },
+                new Table { TableId = 11, Seatings = 6 },
+                new Table { TableId = 12, Seatings = 10 },
+                new Table { TableId = 13, Seatings = 10 }
                 );
             modelBuilder.Entity<Menu>().HasData(
 

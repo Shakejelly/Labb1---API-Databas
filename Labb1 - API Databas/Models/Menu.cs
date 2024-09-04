@@ -15,8 +15,8 @@ namespace Labb1___API_Databas.Models
 
         [Required]
         public double DishPrice { get; set; }
-        public int? DishInStock { get; set; }
-        public ICollection<Booking> Bookings { get; set; }
+        public bool DishInStock { get; set; }
+      
 
     }
 }

@@ -26,6 +26,17 @@ namespace Labb1___API_Databas.Repositories.MenuRepo
                 throw new Exception("Couldn't add the menu.");
             }
         }
+
+        public Task ChangeAvaiableDish(Menu menu)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteMenuAsync(Menu menu)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteTableAsync(Menu Menu)
         {
             try
@@ -38,6 +49,16 @@ namespace Labb1___API_Databas.Repositories.MenuRepo
                 throw new Exception("Couldn't delete the menu.");
             }
 
+        }
+
+        public Task<Menu> GetMenuAsync(string menuId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateMenuAsync(Menu menu)
+        {
+            throw new NotImplementedException();
         }
     }
 }
