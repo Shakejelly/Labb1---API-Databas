@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Labb1___API_Databas.Repositories.MenuRepo;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Labb1___API_Databas.Controllers
@@ -7,5 +8,10 @@ namespace Labb1___API_Databas.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
+        private readonly IMenuRepo _menuRepo;
+        public MenuController(IMenuRepo menuRepo)
+        {
+            _menuRepo = menuRepo;
+        }
     }
 }
