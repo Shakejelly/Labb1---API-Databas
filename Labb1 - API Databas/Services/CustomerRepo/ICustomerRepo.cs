@@ -6,5 +6,6 @@ namespace Labb1___API_Databas.Repositories.CustomerRepo
     {
         Task AddCustomerAsync(Customer customer);
         Task DeleteCustomerAsync(Customer customer);
+
     }
 }

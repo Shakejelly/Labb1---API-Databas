@@ -21,9 +21,9 @@ namespace Labb1___API_Databas.Data
 
             modelBuilder.Entity<Customer>().HasData(
                
-                  new Customer { CustomerId = 1, ReservationName = "John Doe", PhoneNumber = "(555) 123 - 4567", TimeToArrive = "April 20 Time 20:00" },
-                  new Customer { CustomerId = 2, ReservationName = "Jane Smith", PhoneNumber = "(555) 234-5678", TimeToArrive = "April 21 Time 20:00" },
-                  new Customer { CustomerId = 3, ReservationName = "Michael Johnson", PhoneNumber = "(555) 345-6789", TimeToArrive = "April 21 Time 20:21" }
+                  new Customer { CustomerId = 1, ReservationName = "John Doe", PhoneNumber = "(555) 123 - 4567" },
+                  new Customer { CustomerId = 2, ReservationName = "Jane Smith", PhoneNumber = "(555) 234-5678" },
+                  new Customer { CustomerId = 3, ReservationName = "Michael Johnson", PhoneNumber = "(555) 345-6789" }
 
                 );
             modelBuilder.Entity<Table>().HasData(
