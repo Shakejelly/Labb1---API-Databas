@@ -5,6 +5,5 @@
         public string ReservationName { get; set; }
         public string PhoneNumber { get; set; }
 
-
     }
 }

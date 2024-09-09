@@ -8,8 +8,8 @@ namespace Labb1___API_Databas.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerRepo _customerRepo;
-        public CustomerController(ICustomerRepo customerRepo)
+        private readonly ICustomerService _customerRepo;
+        public CustomerController(ICustomerService customerRepo)
         {
             _customerRepo = customerRepo;
         }

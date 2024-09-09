@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Labb1___API_Databas.Repositories.MenuRepo
 {
-    public class MenuRepo : IMenuRepo
+    public class MenuServuce : IMenuService
 
     {
         private readonly RestaurantContext _context;
-        public MenuRepo(RestaurantContext context)
+        public MenuServuce(RestaurantContext context)
         {
             _context = context;
 

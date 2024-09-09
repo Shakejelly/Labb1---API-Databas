@@ -8,8 +8,8 @@ namespace Labb1___API_Databas.Controllers
     [ApiController]
     public class TableController : ControllerBase
     {
-        private readonly ITableRepo _tableRepo;
-        public TableController(ITableRepo tableRepo)
+        private readonly ITableService _tableRepo;
+        public TableController(ITableService tableRepo)
         {
             _tableRepo = tableRepo;            
         }

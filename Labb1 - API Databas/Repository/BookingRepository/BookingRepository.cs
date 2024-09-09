@@ -14,18 +14,18 @@ namespace Labb1___API_Databas.Repository.BookingRepository
             _context = context;
         }
 
-        public async Task AddBookingAsync(Booking booking)
+        public async Task AddBookingAsync(Booking booking, CancellationToken cancellationToken)
         {
             await _context.Bookings.AddAsync(booking);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBookingAsync(Booking booking)
+        public async Task DeleteBookingAsync(Booking booking, CancellationToken cancellationToken)
         {
             await _context.Bookings.AddAsync(booking);
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        public async Task<IEnumerable<Booking>> GetAllBookingsAsync(CancellationToken cancellationToken)
         {
             return await _context.Bookings
                 .Include(b => b.Customer)

@@ -1,44 +1,41 @@
 ﻿using Labb1___API_Databas.Data;
 using Labb1___API_Databas.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Labb1___API_Databas.Repositories.CustomerRepo
+namespace Labb1___API_Databas.Repositories.TableRepo
 {
-    public class CustomerRepo : ICustomerRepo
+    public class TableService : ITableService
     {
         private readonly RestaurantContext _context;
-        public CustomerRepo(RestaurantContext context)
+        public TableService(RestaurantContext context)
         {
             _context = context;
 
         }
-        public async Task AddCustomerAsync(Customer customer)
+        public async Task AddTableAsync(Table table)
         {
             try
             {
-                _context.Customers.Add(customer);
+                _context.Tables.Add(table);
                 await _context.SaveChangesAsync();
                 return;
             }
             catch (Exception)
             {
-                throw new Exception("Couldn't add the customer.");
+                throw new Exception("Couldn't add the table.");
             }
         }
-        public async Task DeleteCustomerAsync(Customer Customer)
+        public async Task DeleteTableAsync(Table Table)
         {
             try
             {
-                _context.Customers.Remove(Customer);
+                _context.Tables.Remove(Table);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
-                throw new Exception("Couldn't delete customer.");
+                throw new Exception("Couldn't delete table.");
             }
 
         }
-
-
     }
 }

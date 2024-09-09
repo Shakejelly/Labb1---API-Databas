@@ -8,8 +8,8 @@ namespace Labb1___API_Databas.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        private readonly IMenuRepo _menuRepo;
-        public MenuController(IMenuRepo menuRepo)
+        private readonly IMenuService _menuRepo;
+        public MenuController(IMenuService menuRepo)
         {
             _menuRepo = menuRepo;
         }

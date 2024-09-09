@@ -20,35 +20,35 @@ namespace Labb1___API_Databas.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllBookings()
+        public async Task<IActionResult> GetAllBookings(CancellationToken cancellationToken)
         {
             var bookings = await _bookingService.GetAllReservationsAsync();
             return Ok(bookings);
         }
         [HttpGet]
         [Route("booking/{bookingId}")]
-        public async Task<IActionResult> GetBookingById(int bookingId)
+        public async Task<IActionResult> GetBookingById(int bookingId, CancellationToken cancellationToken)
         {
             var booking = await _bookingService.GetReservationByIdAsync(bookingId);
             return Ok(booking);
         }
         [HttpPost]
         [Route("addBooking")]
-        public async Task<IActionResult> AddBooking(BookingAddDto bookingAdd)
+        public async Task<IActionResult> AddBooking(BookingAddDto bookingAdd, CancellationToken cancellationToken)
         {
             await _bookingService.AddReservationAsync(bookingAdd);
             return Ok();
         }
         [HttpPut]
         [Route("updateBooking/{bookingId}")]
-        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDto bookingUpdate)
+        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDto bookingUpdate, CancellationToken cancellationToken)
         {
             await _bookingService.UpdateReservationAsync(bookingUpdate);
             return Ok();
         }
         [HttpDelete]
         [Route("deleteBooking/{bookingId}")]
-        public async Task<IActionResult> DeleteBooking(int bookingId)
+        public async Task<IActionResult> DeleteBooking(int bookingId, CancellationToken cancellationToken)
         {
             await _bookingService.DeleteReservationAsync(bookingId);
             return Ok();
