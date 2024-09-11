@@ -8,9 +8,9 @@ namespace Labb1___API_Databas.Services
 {
     public class MenuService : IMenuService
     {
-        private readonly MenuRepository _menuRepository;
+        private readonly IMenuRepository _menuRepository;
 
-        public MenuService(MenuRepository menuRepository)
+        public MenuService(IMenuRepository menuRepository)
         {
             _menuRepository = menuRepository;
         }

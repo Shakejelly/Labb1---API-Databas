@@ -7,6 +7,7 @@ using Labb1___API_Databas.Repository.CustomerRepository;
 using Labb1___API_Databas.Repository.MenuRepository;
 using Labb1___API_Databas.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace Labb1___API_Databas
 {
@@ -29,8 +30,8 @@ namespace Labb1___API_Databas
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-            //builder.Services.AddScoped<IMenuService, MenuService>();
-            //builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+            builder.Services.AddScoped<IMenuService, MenuService>();
+            builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
