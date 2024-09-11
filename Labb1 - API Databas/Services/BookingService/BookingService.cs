@@ -28,10 +28,8 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
                 var reservationDto = new BookingGetDto
                 {
                     BookingId = reservation.BookingId,
-                    CustomerId = reservation.Customer.CustomerId,
                     CustomerName = reservation.Customer.ReservationName,
                     PhoneNumber = reservation.Customer.PhoneNumber,
-                    TableId = reservation.Table.TableId,
                     SeatingsAmount = reservation.BookingAmount,
                     TimeToArrive = reservation.TimeToArrive,
                 };
@@ -53,10 +51,8 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
                 var reservationList = reservations.Select(r => new BookingGetDto
                 {
                     BookingId = r.BookingId,
-                    CustomerId = r.Customer.CustomerId,
                     CustomerName = r.Customer.ReservationName,
                     PhoneNumber = r.Customer.PhoneNumber,
-                    TableId = r.Table.TableId,
                     SeatingsAmount = r.BookingAmount,
                     TimeToArrive = r.TimeToArrive,
                 }).ToList();

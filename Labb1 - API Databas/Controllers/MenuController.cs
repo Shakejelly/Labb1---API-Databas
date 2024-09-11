@@ -76,7 +76,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
-        [Route("api/updateDish")]
+        [Route("api/updateDishInStock")]
         public async Task<IActionResult> UpdateDishInStock(int dishId, UpdateDishInStockDto updateDishInStockDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -94,10 +94,9 @@ namespace Labb1___API_Databas.Controllers
 
                 return BadRequest(ModelState);
 
+
             }
         }
 
     }
-
-
 }
