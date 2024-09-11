@@ -15,6 +15,7 @@ namespace Labb1___API_Databas.Models
 
         [Required]
         public double DishPrice { get; set; }
+        [Required]
         public bool DishInStock { get; set; }
       
 

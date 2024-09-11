@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Labb1___API_Databas.Repository.BookingRepository
 {
-    public class BookingRepository : IBookingRepository 
+    public class BookingRepository : IBookingRepository
     {
         private readonly RestaurantContext _context;
 
@@ -16,37 +16,98 @@ namespace Labb1___API_Databas.Repository.BookingRepository
 
         public async Task AddBookingAsync(Booking booking, CancellationToken cancellationToken)
         {
-            await _context.Bookings.AddAsync(booking);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Bookings.AddAsync(booking, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Logga felet eller hantera det på ett passande sätt
+                throw new Exception("An error occurred while adding the booking.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera generella fel
+                throw new Exception("An unexpected error occurred.", ex);
+            }
         }
 
         public async Task DeleteBookingAsync(Booking booking, CancellationToken cancellationToken)
         {
-            await _context.Bookings.AddAsync(booking);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Bookings.Remove(booking);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Logga felet eller hantera det på ett passande sätt
+                throw new Exception("An error occurred while deleting the booking.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera generella fel
+                throw new Exception("An unexpected error occurred.", ex);
+            }
         }
         public async Task<IEnumerable<Booking>> GetAllBookingsAsync(CancellationToken cancellationToken)
         {
-            return await _context.Bookings
-                .Include(b => b.Customer)
-                .Include(b => b.Table)
-                .ToListAsync();
-                
+            try
+            {
+                return await _context.Bookings
+                    .Include(b => b.Customer)
+                    .Include(b => b.Table)
+                    .ToListAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // Hantera fel vid hämtning av bokningar
+                throw new Exception("An error occurred while retrieving bookings.", ex);
+            }
+
         }
 
-        public async Task<Booking> GetBookingByIdAsync(int bookingId)
+        public async Task<Booking> GetBookingByIdAsync(int bookingId, CancellationToken cancellationToken)
         {
-            var booking = await _context.Bookings
-                .Include(b => b.Customer)
-                .Include(b => b.Table)
-                .FirstOrDefaultAsync(b => b.BookingId == bookingId);
-            return booking;
-        }
+            try
+            {
+                var booking = await _context.Bookings
+                    .Include(b => b.Customer)
+                    .Include(b => b.Table)
+                    .FirstOrDefaultAsync(b => b.BookingId == bookingId, cancellationToken);
 
-        public async Task UpdateBookingAsync(Booking booking)
+                if (booking == null)
+                {
+                    throw new Exception($"Booking with ID {bookingId} not found.");
+                }
+
+                return booking;
+            }
+            catch (Exception ex)
+            {
+                // Hantera fel vid hämtning av bokning
+                throw new Exception("An error occurred while retrieving the booking.", ex);
+            }
+        }
+        public async Task UpdateBookingAsync(Booking booking, CancellationToken cancellationToken)
+
         {
-            await _context.Bookings.AddAsync(booking);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Bookings.Update(booking);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Logga felet eller hantera det på ett passande sätt
+                throw new Exception("An error occurred while updating the booking.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera generella fel
+                throw new Exception("An unexpected error occurred.", ex);
+            }
         }
     }
-}
+}    

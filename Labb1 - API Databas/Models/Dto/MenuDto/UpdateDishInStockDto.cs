@@ -2,7 +2,7 @@
 {
     public class UpdateDishInStockDto
     {
-        public int MenuId { get; set; }
+        public int DishId { get; set; }
         public bool DishAvailable { get; set; }
     }
 }

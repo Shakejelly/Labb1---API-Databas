@@ -1,7 +1,6 @@
-﻿using Labb1___API_Databas.Data;
-using Labb1___API_Databas.Models.Dto.BookingDto;
-using Labb1___API_Databas.Repositories.BookingRepo;
+﻿using Labb1___API_Databas.Models.Dto.BookingDto;
 using Microsoft.AspNetCore.Mvc;
+using Labb1___API_Databas.Repositories.BookingRepo;
 
 namespace Labb1___API_Databas.Controllers
 {
@@ -20,38 +19,97 @@ namespace Labb1___API_Databas.Controllers
         }
 
         [HttpGet]
+        [Route("getAllBookings")]
         public async Task<IActionResult> GetAllBookings(CancellationToken cancellationToken)
         {
-            var bookings = await _bookingService.GetAllReservationsAsync();
-            return Ok(bookings);
+            try
+            {
+                var bookings = await _bookingService.GetAllReservationsAsync(cancellationToken);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                // Logga felet
+                return StatusCode(500, "An error occurred while retrieving bookings.");
+            }
         }
         [HttpGet]
         [Route("booking/{bookingId}")]
         public async Task<IActionResult> GetBookingById(int bookingId, CancellationToken cancellationToken)
         {
-            var booking = await _bookingService.GetReservationByIdAsync(bookingId);
-            return Ok(booking);
+            try
+            {
+                var booking = await _bookingService.GetReservationByIdAsync(bookingId, cancellationToken);
+                if (booking == null)
+                {
+                    return NotFound($"Booking with ID {bookingId} not found.");
+                }
+                return Ok(booking);
+            }
+            catch (Exception ex)
+            {
+                // Logga felet
+                return StatusCode(500, "An error occurred while retrieving the booking.");
+            }
         }
         [HttpPost]
         [Route("addBooking")]
-        public async Task<IActionResult> AddBooking(BookingAddDto bookingAdd, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddBooking(BookingAddDto bookingAddDto, CancellationToken cancellationToken)
         {
-            await _bookingService.AddReservationAsync(bookingAdd);
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _bookingService.AddReservationAsync(bookingAddDto, cancellationToken);
+
+                // Om du inte har möjlighet att returnera ID eller annan resursdetalj, returnera bara 201 Created.
+                return CreatedAtAction(nameof(GetAllBookings), null); // Eller använd en annan lämplig metod
+            }
+            catch (Exception ex)
+            {
+                // Logga felet för felsökning
+                // Exempel: _logger.LogError(ex, "An error occurred while adding the booking.");
+                return StatusCode(500, "An error occurred while adding the booking.");
+            }
         }
         [HttpPut]
         [Route("updateBooking/{bookingId}")]
-        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDto bookingUpdate, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDto bookingUpdateDto, CancellationToken cancellationToken)
         {
-            await _bookingService.UpdateReservationAsync(bookingUpdate);
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                bookingUpdateDto.BookingId = bookingId; // Ensures the bookingId is set in the DTO
+                await _bookingService.UpdateReservationAsync(bookingUpdateDto, cancellationToken);
+                return NoContent(); // Indicate success without returning data
+            }
+            catch (Exception ex)
+            {
+                // Logga felet
+                return StatusCode(500, "An error occurred while updating the booking.");
+            }
         }
         [HttpDelete]
         [Route("deleteBooking/{bookingId}")]
         public async Task<IActionResult> DeleteBooking(int bookingId, CancellationToken cancellationToken)
         {
-            await _bookingService.DeleteReservationAsync(bookingId);
-            return Ok();
+            try
+            {
+                await _bookingService.DeleteReservationAsync(bookingId, cancellationToken);
+                return NoContent(); // Indicate success without returning data
+            }
+            catch (Exception ex)
+            {
+                // Logga felet
+                return StatusCode(500, "An error occurred while deleting the booking.");
+            }
         }
     }
 }

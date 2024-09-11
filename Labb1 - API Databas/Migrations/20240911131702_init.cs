@@ -19,8 +19,7 @@ namespace Labb1___API_Databas.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReservationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeToArrive = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +35,7 @@ namespace Labb1___API_Databas.Migrations
                     DishName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DishPrice = table.Column<double>(type: "float", nullable: false),
-                    DishInStock = table.Column<int>(type: "int", nullable: true)
+                    DishInStock = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,13 +46,13 @@ namespace Labb1___API_Databas.Migrations
                 name: "Tables",
                 columns: table => new
                 {
-                    TableNumber = table.Column<int>(type: "int", nullable: false)
+                    TableId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Seatings = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tables", x => x.TableNumber);
+                    table.PrimaryKey("PK_Tables", x => x.TableId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +63,8 @@ namespace Labb1___API_Databas.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FK_TableNumber = table.Column<int>(type: "int", nullable: false),
                     FK_CustomerId = table.Column<int>(type: "int", nullable: false),
-                    FK_MenuId = table.Column<int>(type: "int", nullable: false)
+                    TimeToArrive = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BookingAmount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,27 +76,21 @@ namespace Labb1___API_Databas.Migrations
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bookings_Menus_FK_MenuId",
-                        column: x => x.FK_MenuId,
-                        principalTable: "Menus",
-                        principalColumn: "DishId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Bookings_Tables_FK_TableNumber",
                         column: x => x.FK_TableNumber,
                         principalTable: "Tables",
-                        principalColumn: "TableNumber",
+                        principalColumn: "TableId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerId", "PhoneNumber", "ReservationName", "TimeToArrive" },
+                columns: new[] { "CustomerId", "PhoneNumber", "ReservationName" },
                 values: new object[,]
                 {
-                    { 1, "(555) 123 - 4567", "John Doe", "April 20 Time 20:00" },
-                    { 2, "(555) 234-5678", "Jane Smith", "April 21 Time 20:00" },
-                    { 3, "(555) 345-6789", "Michael Johnson", "April 21 Time 20:21" }
+                    { 1, "(555) 123 - 4567", "John Doe" },
+                    { 2, "(555) 234-5678", "Jane Smith" },
+                    { 3, "(555) 345-6789", "Michael Johnson" }
                 });
 
             migrationBuilder.InsertData(
@@ -104,21 +98,21 @@ namespace Labb1___API_Databas.Migrations
                 columns: new[] { "DishId", "Description", "DishInStock", "DishName", "DishPrice" },
                 values: new object[,]
                 {
-                    { 1, "Classic Italian pasta with a creamy egg and pancetta sauce.", null, "Spaghetti Carbonara", 14.99 },
-                    { 2, "A simple pizza topped with fresh tomatoes, mozzarella, and basil.", null, "Margherita Pizza", 12.5 },
-                    { 3, "Tender chicken in a spiced tomato and cream sauce, served with rice.", null, "Chicken Tikka Masala", 16.989999999999998 },
-                    { 4, "An assortment of fresh sushi rolls with wasabi and soy sauce.", null, "Sushi Platter", 22.0 },
-                    { 5, "Crisp romaine lettuce with Caesar dressing, croutons, and parmesan.", null, "Caesar Salad", 10.5 },
-                    { 6, "Soft tortillas filled with seasoned beef, lettuce, and cheddar cheese.", null, "Beef Tacos", 11.25 },
-                    { 7, "Stir-fried rice noodles with shrimp, peanuts, and tangy tamarind sauce.", null, "Pad Thai", 13.75 },
-                    { 8, "Rich and creamy soup made from fresh lobster and a touch of sherry.", null, "Lobster Bisque", 18.5 },
-                    { 9, "A colorful mix of vegetables sautéed in a savory soy-ginger sauce.", null, "Veggie Stir-Fry", 12.0 },
-                    { 10, "Warm, molten-centered chocolate cake served with vanilla ice cream.", null, "Chocolate Lava Cake", 8.9900000000000002 }
+                    { 1, "Classic Italian pasta with a creamy egg and pancetta sauce.", false, "Spaghetti Carbonara", 14.99 },
+                    { 2, "A simple pizza topped with fresh tomatoes, mozzarella, and basil.", false, "Margherita Pizza", 12.5 },
+                    { 3, "Tender chicken in a spiced tomato and cream sauce, served with rice.", false, "Chicken Tikka Masala", 16.989999999999998 },
+                    { 4, "An assortment of fresh sushi rolls with wasabi and soy sauce.", false, "Sushi Platter", 22.0 },
+                    { 5, "Crisp romaine lettuce with Caesar dressing, croutons, and parmesan.", false, "Caesar Salad", 10.5 },
+                    { 6, "Soft tortillas filled with seasoned beef, lettuce, and cheddar cheese.", false, "Beef Tacos", 11.25 },
+                    { 7, "Stir-fried rice noodles with shrimp, peanuts, and tangy tamarind sauce.", false, "Pad Thai", 13.75 },
+                    { 8, "Rich and creamy soup made from fresh lobster and a touch of sherry.", false, "Lobster Bisque", 18.5 },
+                    { 9, "A colorful mix of vegetables sautéed in a savory soy-ginger sauce.", false, "Veggie Stir-Fry", 12.0 },
+                    { 10, "Warm, molten-centered chocolate cake served with vanilla ice cream.", false, "Chocolate Lava Cake", 8.9900000000000002 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Tables",
-                columns: new[] { "TableNumber", "Seatings" },
+                columns: new[] { "TableId", "Seatings" },
                 values: new object[,]
                 {
                     { 1, 2 },
@@ -142,11 +136,6 @@ namespace Labb1___API_Databas.Migrations
                 column: "FK_CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_FK_MenuId",
-                table: "Bookings",
-                column: "FK_MenuId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Bookings_FK_TableNumber",
                 table: "Bookings",
                 column: "FK_TableNumber");
@@ -159,10 +148,10 @@ namespace Labb1___API_Databas.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Menus");
 
             migrationBuilder.DropTable(
-                name: "Menus");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Tables");

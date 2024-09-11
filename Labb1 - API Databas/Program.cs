@@ -1,4 +1,11 @@
 using Labb1___API_Databas.Data;
+using Labb1___API_Databas.Repositories.BookingRepo;
+using Labb1___API_Databas.Repositories.CustomerRepo;
+using Labb1___API_Databas.Repositories.MenuRepo;
+using Labb1___API_Databas.Repository.BookingRepository;
+using Labb1___API_Databas.Repository.CustomerRepository;
+using Labb1___API_Databas.Repository.MenuRepository;
+using Labb1___API_Databas.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Labb1___API_Databas
@@ -9,11 +16,21 @@ namespace Labb1___API_Databas
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
             builder.Services.AddDbContext<RestaurantContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+          
+            builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            //builder.Services.AddScoped<IMenuService, MenuService>();
+            //builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

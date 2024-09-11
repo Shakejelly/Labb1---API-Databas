@@ -14,75 +14,123 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
 
         }
 
-        public async Task<BookingGetDto> GetReservationByIdAsync(int bookingId)
+        public async Task<BookingGetDto> GetReservationByIdAsync(int bookingId, CancellationToken cancellationToken)
         {
-            var reservation = await _repo.GetBookingByIdAsync(bookingId);
-
-            var reservationDto = new BookingGetDto
+            try
             {
-                BookingId = reservation.BookingId,
-                CustomerId = reservation.Customer.CustomerId,
-                CustomerName = reservation.Customer.ReservationName,
-                PhoneNumber = reservation.Customer.PhoneNumber,
-                TableId = reservation.Table.TableId,
-                SeatingsAmount = reservation.BookingAmount,
-                TimeToArrive = reservation.TimeToArrive,
-            };
-            return reservationDto;
-        }
+                var reservation = await _repo.GetBookingByIdAsync(bookingId, cancellationToken);
 
-        public async Task<IEnumerable<BookingGetDto>> GetAllReservationsAsync()
-        {
-            var reservation = await _repo.GetAllBookingsAsync();
+                if (reservation == null)
+                {
+                    throw new Exception($"Reservation with ID {bookingId} not found.");
+                }
 
-            var reservationList = reservation.Select(r => new BookingGetDto
+                var reservationDto = new BookingGetDto
+                {
+                    BookingId = reservation.BookingId,
+                    CustomerId = reservation.Customer.CustomerId,
+                    CustomerName = reservation.Customer.ReservationName,
+                    PhoneNumber = reservation.Customer.PhoneNumber,
+                    TableId = reservation.Table.TableId,
+                    SeatingsAmount = reservation.BookingAmount,
+                    TimeToArrive = reservation.TimeToArrive,
+                };
+                return reservationDto;
+            }
+            catch (Exception ex)
             {
-                BookingId = r.BookingId,
-                CustomerId = r.Customer.CustomerId,
-                CustomerName = r.Customer.ReservationName,
-                PhoneNumber = r.Customer.PhoneNumber,
-                TableId = r.Table.TableId,
-                SeatingsAmount = r.BookingAmount,
-                TimeToArrive = r.TimeToArrive,
-            }).ToList();
-            return reservationList;
-
-        }
-
-        public async Task DeleteReservationAsync(int bookingId)
-        {
-            var bookingFound = await _repo.GetBookingByIdAsync(bookingId);
-
-                if (bookingFound != null)
-            {
-                await _repo.DeleteBookingAsync(bookingFound);
+                // Logga eller hantera felet på ett passande sätt
+                throw new Exception("An error occurred while retrieving the reservation.", ex);
             }
         }
 
-        public async Task AddReservationAsync(BookingAddDto bookingAdd)
+        public async Task<IEnumerable<BookingGetDto>> GetAllReservationsAsync(CancellationToken cancellationToken)
         {
-            var newReservation = new Booking
+            try
             {
-                FK_CustomerId = bookingAdd.CustomerId,
-                FK_TableNumber = bookingAdd.TableId,
-                BookingAmount = bookingAdd.BookingAmount,
-                TimeToArrive = bookingAdd.TimeToArrive,
+                var reservations = await _repo.GetAllBookingsAsync(cancellationToken);
 
-            };
-            
-            await _repo.AddBookingAsync(newReservation);
+                var reservationList = reservations.Select(r => new BookingGetDto
+                {
+                    BookingId = r.BookingId,
+                    CustomerId = r.Customer.CustomerId,
+                    CustomerName = r.Customer.ReservationName,
+                    PhoneNumber = r.Customer.PhoneNumber,
+                    TableId = r.Table.TableId,
+                    SeatingsAmount = r.BookingAmount,
+                    TimeToArrive = r.TimeToArrive,
+                }).ToList();
+
+                return reservationList;
+            }
+            catch (Exception ex)
+            {
+                // Logga eller hantera felet på ett passande sätt
+                throw new Exception("An error occurred while retrieving all reservations.", ex);
+            }
         }
 
-        public async Task UpdateReservationAsync(BookingUpdateDto bookingUpdate)
+        public async Task DeleteReservationAsync(int bookingId, CancellationToken cancellationToken)
         {
-            var bookingFound = await _repo.GetBookingByIdAsync(bookingUpdate.BookingId);
-
-            if(bookingFound != null)
+            try
             {
+                var bookingFound = await _repo.GetBookingByIdAsync(bookingId, cancellationToken);
+
+                if (bookingFound == null)
+                {
+                    throw new Exception($"Reservation with ID {bookingId} not found.");
+                }
+
+                await _repo.DeleteBookingAsync(bookingFound, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // Logga eller hantera felet på ett passande sätt
+                throw new Exception("An error occurred while deleting the reservation.", ex);
+            }
+        }
+
+        public async Task AddReservationAsync(BookingAddDto bookingAdd, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var newReservation = new Booking
+                {
+                    FK_CustomerId = bookingAdd.CustomerId,
+                    FK_TableNumber = bookingAdd.TableId,
+                    BookingAmount = bookingAdd.BookingAmount,
+                    TimeToArrive = bookingAdd.TimeToArrive,
+                };
+
+                await _repo.AddBookingAsync(newReservation, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // Logga eller hantera felet på ett passande sätt
+                throw new Exception("An error occurred while adding the reservation.", ex);
+            }
+        }
+
+        public async Task UpdateReservationAsync(BookingUpdateDto bookingUpdate, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var bookingFound = await _repo.GetBookingByIdAsync(bookingUpdate.BookingId, cancellationToken);
+
+                if (bookingFound == null)
+                {
+                    throw new Exception($"Reservation with ID {bookingUpdate.BookingId} not found.");
+                }
+
                 bookingFound.BookingAmount = bookingUpdate.BookingAmount;
                 bookingFound.TimeToArrive = bookingUpdate.TimeToArrive;
 
-                await _repo.UpdateBookingAsync(bookingFound);
+                await _repo.UpdateBookingAsync(bookingFound, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                // Logga eller hantera felet på ett passande sätt
+                throw new Exception("An error occurred while updating the reservation.", ex);
             }
         }
     }

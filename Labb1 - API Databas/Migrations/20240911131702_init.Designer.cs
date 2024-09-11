@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Labb1___API_Databas.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20240830111211_init")]
+    [Migration("20240911131702_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -33,20 +33,22 @@ namespace Labb1___API_Databas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int>("FK_CustomerId")
+                    b.Property<int>("BookingAmount")
                         .HasColumnType("int");
 
-                    b.Property<int>("FK_MenuId")
+                    b.Property<int>("FK_CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("FK_TableNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("TimeToArrive")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BookingId");
 
                     b.HasIndex("FK_CustomerId");
-
-                    b.HasIndex("FK_MenuId");
 
                     b.HasIndex("FK_TableNumber");
 
@@ -69,10 +71,6 @@ namespace Labb1___API_Databas.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TimeToArrive")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
@@ -82,22 +80,19 @@ namespace Labb1___API_Databas.Migrations
                         {
                             CustomerId = 1,
                             PhoneNumber = "(555) 123 - 4567",
-                            ReservationName = "John Doe",
-                            TimeToArrive = "April 20 Time 20:00"
+                            ReservationName = "John Doe"
                         },
                         new
                         {
                             CustomerId = 2,
                             PhoneNumber = "(555) 234-5678",
-                            ReservationName = "Jane Smith",
-                            TimeToArrive = "April 21 Time 20:00"
+                            ReservationName = "Jane Smith"
                         },
                         new
                         {
                             CustomerId = 3,
                             PhoneNumber = "(555) 345-6789",
-                            ReservationName = "Michael Johnson",
-                            TimeToArrive = "April 21 Time 20:21"
+                            ReservationName = "Michael Johnson"
                         });
                 });
 
@@ -113,8 +108,8 @@ namespace Labb1___API_Databas.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DishInStock")
-                        .HasColumnType("int");
+                    b.Property<bool>("DishInStock")
+                        .HasColumnType("bit");
 
                     b.Property<string>("DishName")
                         .IsRequired()
@@ -132,6 +127,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 1,
                             Description = "Classic Italian pasta with a creamy egg and pancetta sauce.",
+                            DishInStock = false,
                             DishName = "Spaghetti Carbonara",
                             DishPrice = 14.99
                         },
@@ -139,6 +135,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 2,
                             Description = "A simple pizza topped with fresh tomatoes, mozzarella, and basil.",
+                            DishInStock = false,
                             DishName = "Margherita Pizza",
                             DishPrice = 12.5
                         },
@@ -146,6 +143,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 3,
                             Description = "Tender chicken in a spiced tomato and cream sauce, served with rice.",
+                            DishInStock = false,
                             DishName = "Chicken Tikka Masala",
                             DishPrice = 16.989999999999998
                         },
@@ -153,6 +151,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 4,
                             Description = "An assortment of fresh sushi rolls with wasabi and soy sauce.",
+                            DishInStock = false,
                             DishName = "Sushi Platter",
                             DishPrice = 22.0
                         },
@@ -160,6 +159,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 5,
                             Description = "Crisp romaine lettuce with Caesar dressing, croutons, and parmesan.",
+                            DishInStock = false,
                             DishName = "Caesar Salad",
                             DishPrice = 10.5
                         },
@@ -167,6 +167,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 6,
                             Description = "Soft tortillas filled with seasoned beef, lettuce, and cheddar cheese.",
+                            DishInStock = false,
                             DishName = "Beef Tacos",
                             DishPrice = 11.25
                         },
@@ -174,6 +175,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 7,
                             Description = "Stir-fried rice noodles with shrimp, peanuts, and tangy tamarind sauce.",
+                            DishInStock = false,
                             DishName = "Pad Thai",
                             DishPrice = 13.75
                         },
@@ -181,6 +183,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 8,
                             Description = "Rich and creamy soup made from fresh lobster and a touch of sherry.",
+                            DishInStock = false,
                             DishName = "Lobster Bisque",
                             DishPrice = 18.5
                         },
@@ -188,6 +191,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 9,
                             Description = "A colorful mix of vegetables sautéed in a savory soy-ginger sauce.",
+                            DishInStock = false,
                             DishName = "Veggie Stir-Fry",
                             DishPrice = 12.0
                         },
@@ -195,6 +199,7 @@ namespace Labb1___API_Databas.Migrations
                         {
                             DishId = 10,
                             Description = "Warm, molten-centered chocolate cake served with vanilla ice cream.",
+                            DishInStock = false,
                             DishName = "Chocolate Lava Cake",
                             DishPrice = 8.9900000000000002
                         });
@@ -202,83 +207,83 @@ namespace Labb1___API_Databas.Migrations
 
             modelBuilder.Entity("Labb1___API_Databas.Models.Table", b =>
                 {
-                    b.Property<int>("TableNumber")
+                    b.Property<int>("TableId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableNumber"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableId"));
 
                     b.Property<int?>("Seatings")
                         .HasColumnType("int");
 
-                    b.HasKey("TableNumber");
+                    b.HasKey("TableId");
 
                     b.ToTable("Tables");
 
                     b.HasData(
                         new
                         {
-                            TableNumber = 1,
+                            TableId = 1,
                             Seatings = 2
                         },
                         new
                         {
-                            TableNumber = 2,
+                            TableId = 2,
                             Seatings = 2
                         },
                         new
                         {
-                            TableNumber = 3,
+                            TableId = 3,
                             Seatings = 2
                         },
                         new
                         {
-                            TableNumber = 4,
+                            TableId = 4,
                             Seatings = 4
                         },
                         new
                         {
-                            TableNumber = 5,
+                            TableId = 5,
                             Seatings = 4
                         },
                         new
                         {
-                            TableNumber = 6,
+                            TableId = 6,
                             Seatings = 4
                         },
                         new
                         {
-                            TableNumber = 7,
+                            TableId = 7,
                             Seatings = 4
                         },
                         new
                         {
-                            TableNumber = 8,
+                            TableId = 8,
                             Seatings = 6
                         },
                         new
                         {
-                            TableNumber = 9,
+                            TableId = 9,
                             Seatings = 6
                         },
                         new
                         {
-                            TableNumber = 10,
+                            TableId = 10,
                             Seatings = 6
                         },
                         new
                         {
-                            TableNumber = 11,
+                            TableId = 11,
                             Seatings = 6
                         },
                         new
                         {
-                            TableNumber = 12,
+                            TableId = 12,
                             Seatings = 10
                         },
                         new
                         {
-                            TableNumber = 13,
+                            TableId = 13,
                             Seatings = 10
                         });
                 });
@@ -291,12 +296,6 @@ namespace Labb1___API_Databas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Labb1___API_Databas.Models.Menu", "Menu")
-                        .WithMany("Bookings")
-                        .HasForeignKey("FK_MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Labb1___API_Databas.Models.Table", "Table")
                         .WithMany("Bookings")
                         .HasForeignKey("FK_TableNumber")
@@ -305,17 +304,10 @@ namespace Labb1___API_Databas.Migrations
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Menu");
-
                     b.Navigation("Table");
                 });
 
             modelBuilder.Entity("Labb1___API_Databas.Models.Customer", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("Labb1___API_Databas.Models.Menu", b =>
                 {
                     b.Navigation("Bookings");
                 });

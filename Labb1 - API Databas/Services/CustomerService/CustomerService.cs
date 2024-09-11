@@ -18,20 +18,31 @@ namespace Labb1___API_Databas.Repositories.CustomerRepo
 
         public async Task AddCustomerAsync(AddCustomerDto customerDto, CancellationToken cancellationToken)
         {
-            if (await _repository.CustomerExistAsync(customerDto.PhoneNumber, cancellationToken))
+            try
             {
-                return;
+                if (await _repository.CustomerExistAsync(customerDto.PhoneNumber, cancellationToken))
+                {
+                    return;
+                }
+
+                var newCustomer = new Customer
+                {
+                    ReservationName = customerDto.ReservationName,
+                    PhoneNumber = customerDto.PhoneNumber,
+                };
+
+                await _repository.AddCustomerAsync(newCustomer, cancellationToken);
             }
-
-            var newReservation = new Customer
+            catch (DbUpdateException ex)
             {
-                ReservationName = customerDto.ReservationName,
-                PhoneNumber = customerDto.PhoneNumber,
-
-            };
-            
-            await _repository.AddCustomerAsync(newReservation);
-            
+                // Logga eller hantera databasfel
+                throw new Exception("An error occurred while adding the customer to the database.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera andra typer av fel
+                throw new Exception("An unexpected error occurred.", ex);
+            }
         }
     }
 }
