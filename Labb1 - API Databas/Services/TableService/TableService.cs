@@ -1,41 +1,88 @@
-﻿using Labb1___API_Databas.Data;
-using Labb1___API_Databas.Models;
+﻿using Labb1___API_Databas.Models;
+using Labb1___API_Databas.Models.Dto.MenuDto;
+using Labb1___API_Databas.Models.Dto.TableDto;
+using Labb1___API_Databas.Repository.TableRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Labb1___API_Databas.Repositories.TableRepo
 {
     public class TableService : ITableService
     {
-        private readonly RestaurantContext _context;
-        public TableService(RestaurantContext context)
+        private readonly ITableRepository _tableRepository;
+        public TableService(ITableRepository tableRepository)
         {
-            _context = context;
-
+            _tableRepository = tableRepository;
         }
-        public async Task AddTableAsync(Table table)
+
+        public async Task AddSeatingsAsync(AddTableDto addTableDto, CancellationToken cancellationToken)
         {
             try
             {
-                _context.Tables.Add(table);
-                await _context.SaveChangesAsync();
-                return;
+                var newTable = new Table
+                {
+                    Seatings = addTableDto.SeatingAmount
+                };
+                await _tableRepository.AddTableAsync(newTable, cancellationToken);
             }
-            catch (Exception)
+            catch (DbUpdateException ex)
             {
-                throw new Exception("Couldn't add the table.");
+                // Logga eller hantera databasfel
+                throw new Exception("An error occurred while adding the table to the database.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera andra typer av fel
+                throw new Exception("An unexpected error occurred while adding the dish.", ex);
             }
         }
-        public async Task DeleteTableAsync(Table Table)
+
+
+        public async Task<IEnumerable<GetAllTablesDto>> GetAllTablesAsync(CancellationToken cancellationToken)
         {
             try
             {
-                _context.Tables.Remove(Table);
-                await _context.SaveChangesAsync();
+                var table = await _tableRepository.GetAllTablesAsync(cancellationToken);
+    
+               return table.Select(x => new GetAllTablesDto
+               {
+                  Id = x.TableId,
+                  SeatingAmount = x.Seatings
+               }).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Couldn't delete table.");
+                // Logga eller hantera andra typer av fel
+                throw new Exception("An error occurred while retrieving the menu.", ex);
             }
 
+
         }
-    }
-}
+        public async Task UpdateSeatingsAsync(ChangeChairAmountDto changeChairAmountDto, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var tableFound = await _tableRepository.GetTableByIdAsync(changeChairAmountDto.TableId, cancellationToken);
+
+                if (tableFound == null)
+                {
+                    throw new Exception($"Table not found.");
+                }
+
+                tableFound.Seatings = changeChairAmountDto.SeatingAmount;
+
+                await _tableRepository.UpdateTableAsync(tableFound, cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Logga eller hantera databasfel
+                throw new Exception("An error occurred while updating the table.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Hantera andra typer av fel
+                throw new Exception("An unexpected error occurred while updating the table.", ex);
+            }
+        }
+    } }
+    
+

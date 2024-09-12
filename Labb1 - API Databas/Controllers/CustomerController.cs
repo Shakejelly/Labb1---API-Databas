@@ -16,7 +16,7 @@ namespace Labb1___API_Databas.Controllers
             _customerRepo = customerRepo;
         }
         [HttpPost]
-        [Route("api/AddCustomer")]
+        [Route("AddCustomer")]
         public async Task<IActionResult> AddCustomer(AddCustomerDto addCustomerDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)

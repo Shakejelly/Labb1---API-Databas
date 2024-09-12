@@ -2,5 +2,6 @@
 {
     public class AddTableDto
     {
+        public int SeatingAmount { get; set; }
     }
 }

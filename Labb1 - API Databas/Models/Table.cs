@@ -6,7 +6,7 @@ namespace Labb1___API_Databas.Models
     {
         [Key]
         public int TableId { get; set; }
-        public int? Seatings { get; set; }
+        public int Seatings { get; set; }
         public ICollection<Booking> Bookings { get; set; }
 
     }

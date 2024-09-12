@@ -18,7 +18,7 @@ namespace Labb1___API_Databas.Controllers
             _menuRepo = menuRepo;
         }
         [HttpGet]
-        [Route("api/getAllDishes")]
+        [Route("getAllDishes")]
         public async Task<IActionResult> GetAllDishes(CancellationToken cancellationToken)
         {
             try
@@ -29,11 +29,11 @@ namespace Labb1___API_Databas.Controllers
             catch (Exception)
             {
 
-                return StatusCode(500, "An error occurred while retrieving bookings.");
+                return StatusCode(500, "An error occurred while retrieving dishes.");
             }
         }
         [HttpPost]
-        [Route("api/addDish")]
+        [Route("addDish")]
         public async Task<IActionResult> AddDish(AddDishDto addDishDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
-        [Route("api/updateDish")]
+        [Route("updateDish")]
         public async Task<IActionResult> UpdateDish(int dishId,UpdateDishDto updateDishDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
-        [Route("api/updateDishInStock")]
+        [Route("updateDishInStock")]
         public async Task<IActionResult> UpdateDishInStock(int dishId, UpdateDishInStockDto updateDishInStockDto, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)

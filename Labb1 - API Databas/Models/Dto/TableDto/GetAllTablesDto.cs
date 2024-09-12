@@ -1,8 +1,8 @@
 ﻿namespace Labb1___API_Databas.Models.Dto.TableDto
 {
-    public class ChangeChairAmountDto
+    public class GetAllTablesDto
     {
-        public int TableId { get; set; }
+        public int Id { get; set; }
         public int SeatingAmount { get; set; }
     }
 }

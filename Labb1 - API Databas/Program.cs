@@ -2,9 +2,11 @@ using Labb1___API_Databas.Data;
 using Labb1___API_Databas.Repositories.BookingRepo;
 using Labb1___API_Databas.Repositories.CustomerRepo;
 using Labb1___API_Databas.Repositories.MenuRepo;
+using Labb1___API_Databas.Repositories.TableRepo;
 using Labb1___API_Databas.Repository.BookingRepository;
 using Labb1___API_Databas.Repository.CustomerRepository;
 using Labb1___API_Databas.Repository.MenuRepository;
+using Labb1___API_Databas.Repository.TableRepository;
 using Labb1___API_Databas.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,6 +34,9 @@ namespace Labb1___API_Databas
 
             builder.Services.AddScoped<IMenuService, MenuService>();
             builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+
+            builder.Services.AddScoped<ITableService, TableService>();
+            builder.Services.AddScoped<ITableRepository, TableRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
