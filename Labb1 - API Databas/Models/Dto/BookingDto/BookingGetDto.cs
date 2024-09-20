@@ -6,6 +6,6 @@
         public string CustomerName { get; set; }
         public string PhoneNumber { get; set; }
         public int SeatingsAmount { get; set; }
-        public string TimeToArrive { get; set; }
+        public DateTime TimeToArrive { get; set; }
     }
 }

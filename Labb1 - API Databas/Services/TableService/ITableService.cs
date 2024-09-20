@@ -8,5 +8,5 @@ namespace Labb1___API_Databas.Repositories.TableRepo
         Task AddSeatingsAsync(AddTableDto addTableDto, CancellationToken cancellationToken);
         Task UpdateSeatingsAsync(ChangeChairAmountDto changeChairAmountDto, CancellationToken cancellationToken);
         Task<IEnumerable<GetAllTablesDto>> GetAllTablesAsync(CancellationToken cancellationToken);
-    }
+            }
 }

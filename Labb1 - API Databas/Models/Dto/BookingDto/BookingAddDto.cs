@@ -5,6 +5,6 @@
         public int CustomerId { get; set; }
         public int TableId { get; set; }
         public int BookingAmount { get; set; }
-        public string TimeToArrive { get; set; }
+        public DateTime TimeToArrive { get; set; }
     }
 }
