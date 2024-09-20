@@ -25,6 +25,16 @@ namespace Labb1___API_Databas
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddCors(options => 
+            {
+                options.AddPolicy("LocalReact", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173/")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
           
             builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
@@ -43,6 +53,8 @@ namespace Labb1___API_Databas
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.UseCors("LocalReact");
 
             if (app.Environment.IsDevelopment())
             {
