@@ -17,7 +17,7 @@ namespace Labb1___API_Databas.Models
         public int FK_CustomerId { get; set; }
         public Customer Customer { get; set; }
         [Required]
-        public string TimeToArrive { get; set; }
+        public DateTime TimeToArrive { get; set; }
         public int BookingAmount { get; set; }
 
 

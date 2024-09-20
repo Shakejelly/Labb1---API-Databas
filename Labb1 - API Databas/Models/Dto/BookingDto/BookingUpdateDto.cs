@@ -4,7 +4,7 @@
     {
         public int BookingId { get; set; }
         public int BookingAmount { get; set; }
-        public string TimeToArrive { get; set; }
+        public DateTime TimeToArrive { get; set; }
 
     }
 }
