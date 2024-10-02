@@ -8,8 +8,11 @@ using Labb1___API_Databas.Repository.CustomerRepository;
 using Labb1___API_Databas.Repository.MenuRepository;
 using Labb1___API_Databas.Repository.TableRepository;
 using Labb1___API_Databas.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace Labb1___API_Databas
 {
@@ -35,6 +38,22 @@ namespace Labb1___API_Databas
                 });
             });
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
+            builder.Services.AddAuthorization();
+
           
             builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
@@ -53,6 +72,8 @@ namespace Labb1___API_Databas
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors("LocalReact");
 

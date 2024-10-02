@@ -5,6 +5,7 @@ using Labb1___API_Databas.Models.Dto.MenuDto;
 using Labb1___API_Databas.Repositories.MenuRepo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Labb1___API_Databas.Controllers
 {
@@ -33,6 +34,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         [Route("addDish")]
         public async Task<IActionResult> AddDish(AddDishDto addDishDto, CancellationToken cancellationToken)
         {
@@ -55,6 +57,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         [Route("updateDish")]
         public async Task<IActionResult> UpdateDish(int dishId,UpdateDishDto updateDishDto, CancellationToken cancellationToken)
         {
@@ -76,6 +79,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         [Route("updateDishInStock")]
         public async Task<IActionResult> UpdateDishInStock(int dishId, UpdateDishInStockDto updateDishInStockDto, CancellationToken cancellationToken)
         {

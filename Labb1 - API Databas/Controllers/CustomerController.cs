@@ -35,7 +35,7 @@ namespace Labb1___API_Databas.Controllers
                 // Om du inte har möjlighet att returnera ID eller annan resursdetalj, returnera bara 201 Created.
                 return StatusCode(200, "Added customer"); // Eller använd en annan lämplig metod
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Logga felet för felsökning
                 // Exempel: _logger.LogError(ex, "An error occurred while adding the booking.");

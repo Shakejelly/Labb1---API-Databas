@@ -2,6 +2,7 @@
 using Labb1___API_Databas.Models.Dto.MenuDto;
 using Labb1___API_Databas.Models.Dto.TableDto;
 using Labb1___API_Databas.Repositories.TableRepo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         [Route("addTables")]
         public async Task<IActionResult> AddTables(AddTableDto addTableDto, CancellationToken cancellationToken)
         {
@@ -54,6 +56,7 @@ namespace Labb1___API_Databas.Controllers
             }
         }
         [HttpPut]
+        [Authorize]
         [Route("updateTables/{TableId}")]
         public async Task<IActionResult> UpdateTable(int tableId, ChangeChairAmountDto changeChairAmountDto, CancellationToken cancellationToken)
         {
@@ -68,7 +71,7 @@ namespace Labb1___API_Databas.Controllers
                 await _tableRepo.UpdateSeatingsAsync(changeChairAmountDto, cancellationToken);
                 return NoContent(); // Indicate success without returning data
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                
                 return StatusCode(500, "An error occurred while updating the booking.");

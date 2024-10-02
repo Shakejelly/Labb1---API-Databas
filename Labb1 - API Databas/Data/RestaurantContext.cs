@@ -10,6 +10,7 @@ namespace Labb1___API_Databas.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<User> Admins { get; set; }
 
         public RestaurantContext(DbContextOptions<RestaurantContext> options) : base(options)
         {
