@@ -1,5 +1,6 @@
 ﻿using Labb1___API_Databas.Models;
 using Labb1___API_Databas.Models.Dto.BookingDto;
+using Labb1___API_Databas.Repositories.TableRepo;
 using Labb1___API_Databas.Repository.BookingRepository;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,11 @@ namespace Labb1___API_Databas.Repositories.BookingRepo
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _repo;
-        public BookingService(IBookingRepository repo)
+        private readonly ITableService _tableService;
+        public BookingService(IBookingRepository repo, ITableService tableService)
         {
             _repo = repo;
+            _tableService = tableService;
 
         }
 

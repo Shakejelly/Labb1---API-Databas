@@ -1,4 +1,5 @@
-﻿using Labb1___API_Databas.Models;
+﻿using Labb1___API_Databas.Data;
+using Labb1___API_Databas.Models;
 using Labb1___API_Databas.Models.Dto.MenuDto;
 using Labb1___API_Databas.Models.Dto.TableDto;
 using Labb1___API_Databas.Repository.TableRepository;
@@ -9,9 +10,11 @@ namespace Labb1___API_Databas.Repositories.TableRepo
     public class TableService : ITableService
     {
         private readonly ITableRepository _tableRepository;
-        public TableService(ITableRepository tableRepository)
+        private readonly RestaurantContext _context;
+        public TableService(ITableRepository tableRepository, RestaurantContext restaurantContext)
         {
             _tableRepository = tableRepository;
+            _context = restaurantContext;
         }
 
         public async Task AddSeatingsAsync(AddTableDto addTableDto, CancellationToken cancellationToken)
@@ -57,6 +60,20 @@ namespace Labb1___API_Databas.Repositories.TableRepo
 
 
         }
+
+
+        public async Task<Table?> GetAvailableTableAsync(int seatingsRequired, DateTime bookingTime, CancellationToken cancellationToken)
+        {
+            var availableTable = await _context.Tables
+                .Include(t => t.Bookings)
+                .Where(t => t.Seatings >= seatingsRequired && !t.Bookings.Any(b => b.TimeToArrive == bookingTime))
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return availableTable;
+        }
+
+
+
         public async Task UpdateSeatingsAsync(ChangeChairAmountDto changeChairAmountDto, CancellationToken cancellationToken)
         {
             try

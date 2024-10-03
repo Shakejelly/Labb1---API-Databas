@@ -116,5 +116,6 @@ namespace Labb1___API_Databas.Controllers
                 return StatusCode(500, "An error occurred while deleting the booking.");
             }
         }
+
     }
 }

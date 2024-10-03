@@ -8,5 +8,7 @@ namespace Labb1___API_Databas.Repository.TableRepository
         Task UpdateTableAsync(Table table, CancellationToken cancellationToken);
         Task<IEnumerable<Table>> GetAllTablesAsync(CancellationToken cancellationToken);
         Task<Table> GetTableByIdAsync(int id, CancellationToken cancellationToken);
+        Task<Table> GetAvailableTableAsync(int seatingCapacity,CancellationToken cancellationToken);
+        Task MarkTableAsOccupiedAsync(int tableId, CancellationToken cancellationToken);
     }
 }

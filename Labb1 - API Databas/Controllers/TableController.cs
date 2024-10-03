@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Labb1___API_Databas.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TableController : ControllerBase
     {
@@ -26,10 +26,10 @@ namespace Labb1___API_Databas.Controllers
                 var table = await _tableRepo.GetAllTablesAsync(cancellationToken);
                 return Ok(table);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return StatusCode(500, "An error occurred while retrieving tables.");
+                return StatusCode(500, "An error occurred while retrieving tables:" + ex.Message);
             }
         }
         [HttpPost]
@@ -47,12 +47,12 @@ namespace Labb1___API_Databas.Controllers
                 await _tableRepo.AddSeatingsAsync(addTableDto, cancellationToken);
 
 
-                return StatusCode(200, "added table");
+                return StatusCode(201, "added table");
             }
             catch (Exception ex)
             {
 
-                return StatusCode(500, ex);
+                return StatusCode(500, ex.Message);
             }
         }
         [HttpPut]
@@ -71,11 +71,19 @@ namespace Labb1___API_Databas.Controllers
                 await _tableRepo.UpdateSeatingsAsync(changeChairAmountDto, cancellationToken);
                 return NoContent(); // Indicate success without returning data
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                
-                return StatusCode(500, "An error occurred while updating the booking.");
+                return StatusCode(500, "An error occurred while updating the booking:" + ex.Message);
             }
+        }
+        [HttpGet]
+        [Route("GetAvailableTable")]
+        public async Task<IActionResult> GetAvailableTable(int seatingsRequired, DateTime bookingTime)
+        {
+            var table = await _tableRepo.GetAvailableTableAsync(seatingsRequired, bookingTime, CancellationToken.None);
+            if (table == null) return NotFound("No available table found.");
+            return Ok(table);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Labb1___API_Databas.Repository.TableRepository
         {
             try
             {
-             _context.Tables.AddAsync(table);
-            await _context.SaveChangesAsync();
+             await _context.Tables.AddAsync(table, cancellationToken);
+             await _context.SaveChangesAsync(cancellationToken);
 
             }
             catch (DbUpdateException ex)
@@ -50,6 +50,22 @@ namespace Labb1___API_Databas.Repository.TableRepository
 
         }
 
+        public async Task<Table> GetAvailableTableAsync(int seatingCapacity, CancellationToken cancellationToken)
+        {
+            try
+            {
+            return await _context.Tables
+                .Where(t => t.Seatings >= seatingCapacity && !t.IsOccupied)
+                .FirstOrDefaultAsync();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving available table.", ex);
+                
+            }
+        }
+
         public async Task<Table> GetTableByIdAsync(int id, CancellationToken cancellationToken)
         {
             try
@@ -68,6 +84,16 @@ namespace Labb1___API_Databas.Repository.TableRepository
             {
                 // Hantera fel vid hämtning av specifik rätt
                 throw new Exception("An error occurred while retrieving the dish.", ex);
+            }
+        }
+
+        public async Task MarkTableAsOccupiedAsync(int tableId, CancellationToken cancellationToken)
+        {
+            var table = await _context.Tables.FindAsync(tableId);
+            if (table != null)
+            {
+                table.IsOccupied = true;
+                await _context.SaveChangesAsync();
             }
         }
 
