@@ -6,6 +6,7 @@ using Labb1___API_Databas.Repositories.MenuRepo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Labb1___API_Databas.Services;
 
 namespace Labb1___API_Databas.Controllers
 {
@@ -101,6 +102,17 @@ namespace Labb1___API_Databas.Controllers
 
             }
         }
+        [HttpGet("getDish/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetDishById(int id, CancellationToken cancellationToken)
+        {
+            var dish = await _menuRepo.GetDishByIdAsync(id, cancellationToken);
+            if (dish == null)
+                return NotFound();
+
+            return Ok(dish);
+        }
+
         [HttpDelete]
         [Authorize]
         [Route("deleteDish/{dishId}")]

@@ -74,6 +74,7 @@ namespace Labb1___API_Databas.Services
 
                 return menu.Select(x => new GetMenuDto
                 {
+                    DishId = x.DishId,
                     DishName = x.DishName,
                     Description = x.Description,
                     DishPrice = x.DishPrice,
@@ -112,5 +113,21 @@ namespace Labb1___API_Databas.Services
                 throw new Exception("An unexpected error occurred while updating the dish.", ex);
             }
         }
+        public async Task DeleteDishAsync(int dishId, CancellationToken cancellationToken)
+        {
+            var dish = await _menuRepository.MenuGetByIdAsync(dishId, cancellationToken);
+
+            if (dish == null)
+                throw new Exception("Dish not found");
+
+            await _menuRepository.DeleteDishAsync(dish, cancellationToken);
+        }
+        public async Task<Menu?> GetDishByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _menuRepository.GetDishByIdAsync(id, cancellationToken);
+        }
+
+
+
     }
 }

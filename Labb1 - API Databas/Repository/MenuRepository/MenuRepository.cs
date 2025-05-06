@@ -34,21 +34,10 @@ namespace Labb1___API_Databas.Repository.MenuRepository
 
         public async Task DeleteDishAsync(Menu menu, CancellationToken cancellationToken)
         {
-            try
-            {
+        
                 _context.Menus.Remove(menu);
                 await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (DbUpdateException ex)
-            {
-                // Logga eller hantera felet på ett passande sätt
-                throw new Exception("An error occurred while deleting the dish.", ex);
-            }
-            catch (Exception ex)
-            {
-                // Hantera generella fel
-                throw new Exception("An unexpected error occurred.", ex);
-            }
+            
         }
 
         public async Task<IEnumerable<Menu>> GetAllDishesAsync(CancellationToken cancellationToken)
@@ -63,6 +52,10 @@ namespace Labb1___API_Databas.Repository.MenuRepository
                 // Hantera fel vid hämtning av alla rätter
                 throw new Exception("An error occurred while retrieving dishes.", ex);
             }
+        }
+        public async Task<Menu?> GetDishByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            return await _context.Menus.FirstOrDefaultAsync(m => m.DishId == id, cancellationToken);
         }
 
         public async Task<Menu> MenuGetByIdAsync(int menuId, CancellationToken cancellationToken)
@@ -103,16 +96,6 @@ namespace Labb1___API_Databas.Repository.MenuRepository
                 // Hantera generella fel
                 throw new Exception("An unexpected error occurred.", ex);
             }
-        }
-        public async Task DeleteDishAsync(int dishId, CancellationToken cancellationToken)
-        {
-            var dish = await _context.Menus.FindAsync(new object[] { dishId }, cancellationToken);
-
-            if (dish == null)
-                throw new Exception("Dish not found");
-
-            _context.Menus.Remove(dish);
-            await _context.SaveChangesAsync(cancellationToken);
         }
 
     }

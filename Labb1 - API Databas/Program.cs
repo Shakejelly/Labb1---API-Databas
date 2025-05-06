@@ -22,17 +22,17 @@ namespace Labb1___API_Databas
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
+
             builder.Services.AddDbContext<RestaurantContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddCors(options => 
+            builder.Services.AddCors(options =>
             {
                 options.AddPolicy("LocalReact", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173/")
+                    policy.WithOrigins("http://localhost:5173")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
@@ -54,7 +54,7 @@ namespace Labb1___API_Databas
                 });
             builder.Services.AddAuthorization();
 
-          
+
             builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
@@ -69,13 +69,40 @@ namespace Labb1___API_Databas
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Description = "Skriv in 'Bearer [mellanslag] följt av din token här:"
+                });
+
+                options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+            });
 
             var app = builder.Build();
+            app.UseHttpsRedirection();
+            app.UseCors("LocalReact");
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("LocalReact");
 
             if (app.Environment.IsDevelopment())
             {
@@ -83,9 +110,6 @@ namespace Labb1___API_Databas
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
 
             app.MapControllers();
 
