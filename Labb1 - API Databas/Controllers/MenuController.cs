@@ -101,6 +101,21 @@ namespace Labb1___API_Databas.Controllers
 
             }
         }
+        [HttpDelete]
+        [Authorize]
+        [Route("deleteDish/{dishId}")]
+        public async Task<IActionResult> DeleteDish(int dishId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _menuRepo.DeleteDishAsync(dishId, cancellationToken);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Could not delete dish.");
+            }
+        }
 
     }
 }

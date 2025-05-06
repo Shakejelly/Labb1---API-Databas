@@ -104,5 +104,16 @@ namespace Labb1___API_Databas.Repository.MenuRepository
                 throw new Exception("An unexpected error occurred.", ex);
             }
         }
+        public async Task DeleteDishAsync(int dishId, CancellationToken cancellationToken)
+        {
+            var dish = await _context.Menus.FindAsync(new object[] { dishId }, cancellationToken);
+
+            if (dish == null)
+                throw new Exception("Dish not found");
+
+            _context.Menus.Remove(dish);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

@@ -10,5 +10,7 @@ namespace Labb1___API_Databas.Repository.MenuRepository
         Task UpdateDishAsync(Menu menu, CancellationToken cancellationToken);
         Task<IEnumerable<Menu>> GetAllDishesAsync(CancellationToken cancellationToken);
         Task<Menu> MenuGetByIdAsync(int menuId, CancellationToken cancellationToken);
+        Task DeleteDishAsync(int dishId, CancellationToken cancellationToken);
+
     }
 }
