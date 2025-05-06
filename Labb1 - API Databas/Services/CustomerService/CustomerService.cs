@@ -27,7 +27,7 @@ namespace Labb1___API_Databas.Repositories.CustomerRepo
 
                 var newCustomer = new Customer
                 {
-                    ReservationName = customerDto.ReservationName,
+                    ReservationName = customerDto.CustomerName,
                     PhoneNumber = customerDto.PhoneNumber,
                 };
 
