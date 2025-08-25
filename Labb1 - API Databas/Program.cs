@@ -32,11 +32,17 @@ namespace Labb1___API_Databas
             {
                 options.AddPolicy("LocalReact", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins(
+                        "http://localhost:5173",        
+                        "https://localhost:7270",       
+                        "http://localhost:5037",        
+                        "https://shakejelly.github.io" 
+                    )
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
             });
+
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
